@@ -1,0 +1,179 @@
+CREATE DATABASE BankProjects
+
+--Create Schema
+CREATE SCHEMA Banks
+
+--Import Data
+
+--View tables
+SELECT * 
+FROM [Banks].[Customer Table]
+
+
+--Sum Transaction type
+SELECT transaction_type, SUM(transaction_amount) AS Value
+FROM [Banks].[Transactions]
+GROUP BY transaction_type
+
+
+--Min and Max transaction date
+SELECT MIN(transaction_date) AS Min_date, MAX(transaction_date) AS Max_date
+FROM [Banks].[Transactions Table]
+
+
+--Total Transactions by month and year
+SELECT FORMAT(transaction_date, 'MMMM-yyyy') AS Date, SUM(transaction_amount) AS Value
+FROM [Banks].[Transactions]
+--WHERE transaction_date BETWEEN '01-JAN-2022' AND '31-DEC-2022'
+GROUP BY FORMAT(transaction_date, 'MMMM-yyyy') 
+ORDER BY 2 DESC;
+
+
+--Total transactions by month for most recent year 2023
+SELECT FORMAT (CONVERT(datetime, transaction_date), 'MMMM') AS Date, SUM(transaction_amount) AS Value
+FROM [Banks].[Transactions] 
+WHERE transaction_date BETWEEN '01-JAN-2023' AND '31-DEC-2023'
+GROUP BY FORMAT (CONVERT(datetime, transaction_date), 'MMMM')
+
+
+--Daily report
+--Count of customers that transacted on 2023-08-29
+SELECT COUNT(Customer_id)AS Customer_Count, transaction_date
+FROM [Banks].[Transactions] 
+WHERE transaction_date = '29-AUG-2024'
+GROUP BY transaction_date
+
+
+--Debit transactions (by the transaction types, that is, debit and credit)
+SELECT transaction_type, SUM(transaction_amount) AS Value
+FROM [Banks].[Transactions] 
+WHERE transaction_date = '29-AUG-2024'
+GROUP BY transaction_type
+
+
+
+--Net Profit
+--2 methods: Subquery and CTE
+
+--Subquery
+SELECT (TotalCredits - TotalDebits) AS NetProfit
+FROM(
+SELECT 
+SUM(CASE WHEN transaction_type = 'Credit' THEN transaction_amount ELSE 0 END) AS TotalCredits,
+SUM(CASE WHEN transaction_type = 'Debit' THEN transaction_amount ELSE 0 END) AS TotalDebits
+FROM [Banks].[Transactions Table]
+WHERE transaction_date = '29-AUG-2023'
+) AS Subquery;
+
+
+--CTE
+WITH TransactionSummary AS
+(
+SELECT 
+SUM(CASE WHEN transaction_type = 'Credit' THEN transaction_amount ELSE 0 END) AS TotalCredits,
+SUM(CASE WHEN transaction_type = 'Debit' THEN transaction_amount ELSE 0 END) AS TotalDebits
+FROM [Banks].[Transactions Table]
+WHERE transaction_date = '29-AUG-2023'
+) SELECT (TotalCredits - TotalDebits) AS NetProfit
+FROM TransactionSummary;
+
+--Top 3 Customers in the month 
+SELECT DISTINCT TOP 3 A.customer_id, B.customer_name,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END) Credit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Debit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END - CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Net_Value
+FROM [Banks].[Transactions Table]A
+JOIN [Banks].[Customer Table] B 
+ON A.customer_id = B.customer_id
+WHERE A.transaction_date >= '2023-08-01' AND A.transaction_date <='2023-08-30'
+GROUP BY A.customer_id, B.customer_name
+--ORDER BY Net_Value DESC;
+
+--Top 5 Customers in the month with positive influence
+SELECT DISTINCT TOP 5 A.customer_id, B.customer_name,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END) Credit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Debit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END - CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Net_Value
+FROM [Banks].[Transactions Table]A
+JOIN [Banks].[Customer Table] B 
+ON A.customer_id = B.customer_id
+WHERE A.transaction_date >= '2023-08-01' AND A.transaction_date <='2023-08-30'
+GROUP BY A.customer_id, B.customer_name
+ORDER BY Net_Value DESC;
+
+
+--Top 5 Customers in the month with negative influence
+SELECT DISTINCT TOP 5 A.customer_id, B.customer_name,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END) Credit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Debit_Amt,
+SUM(CASE WHEN A.transaction_type = 'Credit' THEN A.transaction_amount ELSE 0 END - CASE WHEN A.transaction_type = 'Debit' THEN A.transaction_amount ELSE 0 END) Net_Value
+FROM [Banks].[Transactions Table]A
+JOIN [Banks].[Customer Table] B 
+ON A.customer_id = B.customer_id
+WHERE A.transaction_date >= '2023-08-01' AND A.transaction_date <='2023-08-30'
+GROUP BY A.customer_id, B.customer_name
+ORDER BY Net_Value ASC;
+
+
+
+
+--This is for our automation Project
+
+SELECT * FROM [Banks].[Transactions Table]
+
+
+
+
+
+
+INSERT INTO [Banks].[Transactions Table](transaction_id,customer_id,transaction_date,transaction_type,transaction_amount,channels,currency)
+VALUES('1228','5','2024-08-25','Credit','125556','Apps','Naira'),
+('1229','1','2024-08-25','Credit','241156','Apps','Naira'),
+('1230','3','2024-08-25','Debit','123556','Apps','Naira'),
+('1231','1','2024-08-25','Debit','1556','Cards','Naira'),
+('1232','4','2024-08-25','Credit','159076','Apps','Naira'),
+('1233','1','2024-08-25','Credit','91000','Cards','Naira'),
+('1234','15','2024-08-25','Credit','44000','Cards','Naira'),
+('1235','13','2024-08-25','Credit','50000','Cards','Naira')
+
+
+
+INSERT INTO [Banks].[Transactions Table](transaction_id,customer_id,transaction_date,transaction_type,transaction_amount,channels,currency)
+VALUES('1236','11','2024-08-26','Debit','145556','Apps','Naira'),
+('1237','13','2024-08-26','Debit','6756','Apps','Naira'),
+('1238','20','2024-08-26','Credit','15556','Apps','Naira'),
+('1239','12','2024-08-26','Credit','915556','Cards','Naira'),
+('1240','17','2024-08-26','Debit','490556','Apps','Naira'),
+('1241','17','2024-08-26','Debit','65956','Cards','Naira'),
+('1242','12','2024-08-26','Credit','205556','Cards','Naira')
+
+
+DELETE FROM [Banks].[Transactions Table]
+WHERE transaction_date = '2024-08-26';
+
+
+INSERT INTO [Banks].[Transactions Table](transaction_id,customer_id,transaction_date,transaction_type,transaction_amount,channels,currency)
+VALUES('1243','11','2024-08-27','Debit','145556','Apps','Naira'),
+('1244','13','2024-08-27','Debit','6756','Apps','Naira'),
+('1245','20','2024-08-28','Credit','15556','Apps','Naira'),
+('1246','12','2024-08-28','Credit','915556','Cards','Naira'),
+('1247','7','2024-08-29','Debit','490556','Apps','Naira'),
+('1248','1','2024-08-29','Debit','65956','Cards','Naira'),
+('1249','12','2024-08-29','Credit','205556','Cards','Naira'),
+('1250','11','2024-08-30','Debit','105556','Apps','Naira'),
+('1251','3','2024-08-30','Debit','6756','Apps','Naira'),
+('1252','20','2024-08-30','Credit','15556','Apps','Naira'),
+('1253','12','2024-08-30','Credit','915556','Cards','Naira'),
+('1254','17','2024-08-30','Debit','190556','Apps','Naira'),
+('1255','17','2024-08-30','Debit','6556','Cards','Naira'),
+('1256','12','2024-08-30','Credit','205556','Cards','Naira')
+
+
+INSERT INTO [Banks].[Transactions Table](transaction_id,customer_id,transaction_date,transaction_type,transaction_amount,channels,currency)
+VALUES('1257','1','2024-08-31','Debit','115556','Apps','Naira'),
+('1258','20','2024-08-31','Debit','9756','Apps','Naira'),
+('1259','13','2024-08-31','Credit','35556','Apps','Naira'),
+('1260','17','2024-08-31','Credit','925556','Cards','Naira'),
+('1261','12','2024-08-31','Debit','290556','Apps','Naira'),
+('1262','3','2024-08-31','Debit','7556','Cards','Naira'),
+('1263','5','2024-08-31','Credit','304446','Cards','Naira')
