@@ -91,7 +91,7 @@ The repository includes custom scripts that can be used to automate specific tas
 Scripts can be scheduled using Windows Task Scheduler or another task automation tool, allowing for fully automated end-to-end report generation and distribution. A script could be configured to export the latest version of the dashboard to PDF or Excel and send it via email to stakeholders every morning.
 Impact: These automation scripts further reduced the time spent on manual processes and ensured consistent and timely delivery of reports.
 
-## Alerting and Notifications:
+## Future Works:
 
 Objective: Provide real-time alerts to stakeholders when certain conditions are met or thresholds are crossed.
 Implementation:
@@ -101,7 +101,7 @@ Impact: This proactive approach allows for quicker responses to emerging issues,
 
 ## Benefits of Automation
 Consistency: Automated processes ensure that reports are generated consistently at the same time every day, with no variations in data accuracy or timeliness.
-Efficiency: The automation reduced manual workload by [N%], allowing the team to focus on more strategic tasks rather than routine data management.
+Efficiency: The automation reduced manual workload by 80%, allowing the team to focus on more strategic tasks rather than routine data management.
 Real-Time Decision Making: With up-to-date reports and real-time alerts, the management team can make informed decisions quickly, reacting to changes in the financial landscape without delay.
 
 ## Contributing
