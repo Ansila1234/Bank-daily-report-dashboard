@@ -23,16 +23,19 @@ This repository contains a Power BI dashboard project designed to provide compre
 + Performance Monitoring: Set up key performance indicators (KPIs) to track and monitor critical financial metrics, leading to improved response times and decision-making.
 
 ## Technology Stack
-Power BI: For building the dashboard and visualizations.
-SQL: Used for data extraction, transformation, and loading (ETL).
-DAX (Data Analysis Expressions): For custom calculations and advanced data modeling within Power BI.
-Power Query: For data cleansing, transformation, and integration from multiple sources.
+###  Power BI
++ For building the dashboard and visualizations.
+### SQL
++ Used for data extraction, transformation, and loading (ETL).
+### DAX (Data Analysis Expressions)
++ For custom calculations and advanced data modeling within Power BI.
+### Power Query
++ For data cleansing, transformation, and integration from multiple sources.
 
 ## Project Structure
-Data Sources/: Documentation of the data sources used in the project.
-SQL Queries/: Contains the SQL scripts used for data extraction and manipulation.
-Power BI Report/: The .pbix file containing the Power BI dashboard.
-Automation Scripts/: Scripts for automating the daily report generation.
++ Data Sources/: Documentation of the data sources used in the project.
++ SQL Queries/: Contains the SQL scripts used for data extraction and manipulation.
++ Power BI Report/: The .pbix file containing the Power BI dashboard.
 
 ## Setup Instructions
 To set up this project on your local machine, follow these steps:
