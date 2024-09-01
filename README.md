@@ -15,12 +15,12 @@ This repository contains a Power BI dashboard project designed to provide compre
 + License
 
 ## Features
-Data Integration: Integrated data from X sources, modeling Y tables and establishing Z relationships to create a robust data model.
-Interactive Visualizations: Developed 7 key visualizations that provide insights into total value (₦1.85M), credit value (₦1.14M), debit value (₦708.8K), net value (₦427.8K), transaction volumes, and top customer metrics.
++ Data Integration: Integrated data from 6 sources, modeling 4 tables and establishing 2 relationships to create a robust data model.
++ Interactive Visualizations: Developed 7 key visualizations that provide insights into total value (₦1.85M), credit value (₦1.14M), debit value (₦708.8K), net value (₦427.8K), transaction volumes, and top customer metrics.
 
-Automated Reporting: Automated the daily financial reporting process, reducing manual effort by [N%] and ensuring the management team has access to up-to-date information.
++ Automated Reporting: Automated the daily financial reporting process, reducing manual effort by 80-90% and ensuring the management team has access to up-to-date information.
 
-Performance Monitoring: Set up key performance indicators (KPIs) to track and monitor critical financial metrics, leading to improved response times and decision-making.
++ Performance Monitoring: Set up key performance indicators (KPIs) to track and monitor critical financial metrics, leading to improved response times and decision-making.
 
 ## Technology Stack
 Power BI: For building the dashboard and visualizations.
@@ -85,8 +85,7 @@ Impact: This process eliminated the need for manual data refreshes, reducing man
 Objective: Automate additional report generation tasks and ensure seamless data updates.
 Implementation:
 The repository includes custom scripts that can be used to automate specific tasks, such as data extraction or file exports.
-Scripts can be scheduled using Windows Task Scheduler or another task automation tool, allowing for fully automated end-to-end report generation and distribution.
-Example: A script could be configured to export the latest version of the dashboard to PDF or Excel and send it via email to stakeholders every morning.
+Scripts can be scheduled using Windows Task Scheduler or another task automation tool, allowing for fully automated end-to-end report generation and distribution. A script could be configured to export the latest version of the dashboard to PDF or Excel and send it via email to stakeholders every morning.
 Impact: These automation scripts further reduced the time spent on manual processes and ensured consistent and timely delivery of reports.
 
 ## Alerting and Notifications:
